@@ -63,5 +63,15 @@ public class SocialMediaController {
         }
     }
 
+    @PostMapping("/messages")
+    public ResponseEntity<Message> submitMessage(@RequestBody Message message) {
+        try {
+            Message savedMessage = messageService.createMessage(message);
+            return ResponseEntity.ok(savedMessage);
+        } catch (InvalidMessageException e) {
+            // Handle validation errors
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }
 
