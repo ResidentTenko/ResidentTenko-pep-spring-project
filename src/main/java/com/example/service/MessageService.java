@@ -50,6 +50,18 @@ public class MessageService {
         }
     }
 
+    public long deleteMessageById(Integer messageId) {
+        if (messageRepository.existsById(messageId)) 
+        {
+            messageRepository.deleteById(messageId);
+            return 1;
+        } 
+        else 
+        {
+            return 0;
+        }
+    }
+
     /** public void deleteStore(long id){
         storeRepository.deleteById(id);
     } */
