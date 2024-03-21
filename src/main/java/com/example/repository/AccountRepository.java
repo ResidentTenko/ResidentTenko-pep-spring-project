@@ -12,5 +12,5 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
     Optional<Account> findByUsername(String username);
 
     @Query("FROM Account WHERE account_id = :postedByIdVar")
-    Optional<Account> findByPostedBy(@Param("postedByIdVar") Integer posted_by_id);
+    Optional<Account> findByPostedBy(@Param("postedByIdVar") Integer postedById);
 }

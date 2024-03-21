@@ -5,6 +5,9 @@ import com.example.exception.*;
 import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +21,7 @@ public class MessageService {
     private AccountRepository accountRepository;
 
 
-    public Message createMessage(Message message) {
+    public Message submitMessage(Message message) {
         // Validate message data
         if (message.getMessage_text() == null || message.getMessage_text().isEmpty() || message.getMessage_text().length() > 255) 
         {
@@ -33,4 +36,10 @@ public class MessageService {
         // Save the message to the database
         return messageRepository.save(message);
     }
+
+    public List<Message> getAllMessages() {
+        return messageRepository.findAll();
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,14 +66,21 @@ public class SocialMediaController {
     }
 
     @PostMapping("/messages")
-    public ResponseEntity<Message> submitMessage(@RequestBody Message message) {
+    public ResponseEntity<Message> postMessage(@RequestBody Message message) {
         try {
-            Message savedMessage = messageService.createMessage(message);
+            Message savedMessage = messageService.submitMessage(message);
             return ResponseEntity.ok(savedMessage);
         } catch (InvalidMessageException e) {
             // Handle validation errors
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getAllMessages() {
+        List<Message> allMessages = messageService.getAllMessages();
+        return ResponseEntity.ok(allMessages);
+    }
+
 }
 
