@@ -99,6 +99,21 @@ public class SocialMediaController {
         {
             return ResponseEntity.ok(rowsAffected);
         }
-}
+    }
+
+    @PatchMapping("/messages/{message_id}")
+    public ResponseEntity<?> updateMessageByIdHandler(@PathVariable Integer message_id, @RequestBody Message message) {
+        // update the id first just in case
+        // the request body is not guaranteed to contain the actual id (only the param)
+        message.setMessage_id(message_id);
+        // Update the message with the new content
+        Message updatedMessage = messageService.updateMessageById(message);
+        if (updatedMessage != null) {
+            return ResponseEntity.ok(1);
+        } else {
+            // 400 if the message is not updated
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
 
