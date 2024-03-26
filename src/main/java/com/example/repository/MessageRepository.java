@@ -10,6 +10,10 @@ import com.example.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Integer>{
 
+    /**
+     * @param accountId the id of the message poster
+     * @return all messages posted by accountId 
+     */
     @Query("FROM Message WHERE posted_by = :postedByIdVar")
     List<Message> findAllPostedBy(@Param("postedByIdVar") Integer accountId);
 }
