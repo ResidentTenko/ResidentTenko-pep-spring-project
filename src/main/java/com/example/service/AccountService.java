@@ -15,15 +15,12 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    
     /**
-     * Use the AccountRepository to persist an Account. The given Account will not have an id provided.
-     * Method should check:
-     * if the username is not blank, 
-     * the password is at least 4 characters long, 
-     * and an Account with that username does not already exist
-     * @param account - an Account object that needs to be registered.
-     * @return Account if the persisted account was successful
+     * Registers a new account.
+     * @param account - the account to be registered.
+     * @return the registered account.
+     * @throws InvalidAccountException If the account details are invalid (e.g., the username is blank or the password is less than 4 characters long).
+     * @throws DuplicateUsernameException If the username is already taken.
      */
     public Account registerAccount(Account account) throws DuplicateUsernameException, InvalidAccountException {
         // Check if the username is not blank and the password is at least 4 characters long
@@ -37,14 +34,15 @@ public class AccountService {
             throw new DuplicateUsernameException("Username already exists");
         }
 
-        // Save the new account in the database since it does not exist
+        // Save the new account in the database
         return accountRepository.save(account);
     }
 
     /**
-     * Use the AccountRepository to login an Account.
-     * @param account - an Account object trying to login
-     * @return on success - Account object if login is sucessful (it exists in the database)
+     * Logs in an account.
+     * @param account - the account to be logged in.
+     * @return the logged in account.
+     * @throws UnauthorizedException If the username or password is invalid.
      */
     public Account loginAccount(Account account) {
         Optional<Account> existingAccount = accountRepository.findByUsername(account.getUsername());
@@ -55,5 +53,4 @@ public class AccountService {
             throw new UnauthorizedException("Invalid username or password");
         }
     }
-    
 }
